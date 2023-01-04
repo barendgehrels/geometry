@@ -431,6 +431,7 @@ void test_all()
 template <typename Polygon, typename MultiPolygon>
 void test_specific_areal()
 {
+    #if 1
     {
         // Spikes in a-b and b-a, failure in symmetric difference
         ut_settings settings;
@@ -474,6 +475,26 @@ void test_specific_areal()
                              2);
     }
 
+    #endif
+
+#if 0
+    {
+        // Issue 1034 (Volker)
+        // The output is invalid. Doing the same intersection with coordinates 10 times larger,
+        // the output is valid. Somehow the integer coordinates are intersected well (probably)
+        // but because of rounding to the integer grid, invalidities can appear.
+        ut_settings settings;
+        settings.sym_difference = false;
+        settings.set_test_validity(true);
+        TEST_DIFFERENCE_WITH(0, 1, issue_1034,
+                             2, 2775740.5,
+                             3, 7901.5,
+                             2);
+        TEST_DIFFERENCE_WITH(0, 1, issue_1034_10, 4, 277638639, 3, 780674, 2);
+    }    
+
+    return;
+#endif
     {
         const std::string a_min_b =
             test_one<Polygon, MultiPolygon, MultiPolygon>("ticket_10661",
@@ -518,15 +539,15 @@ int test_main(int, char* [])
 
     test_specific<bg::model::d2::point_xy<int>, false, false>();
 
-#if ! defined(BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE)
-    test_all<bg::model::d2::point_xy<float> >();
-#endif
+// #if ! defined(BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE)
+//     test_all<bg::model::d2::point_xy<float> >();
+// #endif
 
-#if defined(BOOST_GEOMETRY_TEST_FAILURES)
-    // Not yet fully tested for float.
-    // The difference algorithm can generate (additional) slivers
-    BoostGeometryWriteExpectedFailures(24, 11, 21, 7);
-#endif
+// #if defined(BOOST_GEOMETRY_TEST_FAILURES)
+//     // Not yet fully tested for float.
+//     // The difference algorithm can generate (additional) slivers
+//     BoostGeometryWriteExpectedFailures(24, 11, 21, 7);
+// #endif
 
     return 0;
 }

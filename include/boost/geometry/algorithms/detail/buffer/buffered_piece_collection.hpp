@@ -62,6 +62,8 @@
 #include <boost/geometry/util/range.hpp>
 
 
+#  include <boost/geometry/io/wkt/wkt.hpp>
+
 namespace boost { namespace geometry
 {
 
@@ -476,6 +478,14 @@ struct buffered_piece_collection
                     RobustPolicy
                 > visitor(m_pieces, offsetted_rings, m_turns,
                           m_strategy, m_robust_policy);
+
+#if 0
+std::cout << "OFFSETTED RINGS" << std::endl << std::setprecision(20);
+for (const auto& ring : offsetted_rings)                          
+{
+    std::cout << geometry::wkt(ring) << std::endl;
+}
+#endif
 
             detail::sectionalize::enlarge_sections(monotonic_sections, m_strategy);
 

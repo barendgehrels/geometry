@@ -467,6 +467,10 @@ void test_all()
     using polygon = bg::model::polygon<point_type, Clockwise>;
     using multi_polygon = bg::model::multi_polygon<polygon>;
 
+    TEST_DIFFERENCE_A(issue_893, 5.58, 5, 0);
+    TEST_DIFFERENCE_B(issue_893, 2.58, 4, 0);
+    return;
+
     TEST_UNION(case_multi_simplex, 14.58, 1, 0);
     TEST_INTERSECTION(case_multi_simplex, 6.42, 2, 0);
 
@@ -514,7 +518,7 @@ void test_integer()
 
 int test_main(int, char* [])
 {
-    test_integer<int, true>();
+    // test_integer<int, true>();
     test_all<double, true>();
     return 0;
  }

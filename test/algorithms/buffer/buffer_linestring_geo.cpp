@@ -50,6 +50,10 @@ void test_linestring()
     bg::strategy::buffer::geographic_point_circle<Formula> circle(points_per_circle);
     bg::strategy::buffer::end_flat end_flat;
 
+    // // Misses an intersection point when using thomas
+    // test_one_geo<linestring, polygon>("opposite", opposite, strategy, side, circle, join_round, end_round, 1658.0, 5.0, settings);
+    // return;
+
     test_one_geo<linestring, polygon>("simplex_5_8", simplex, strategy, side, circle, join_round, end_flat, 2622.0, 5.0, settings);
     test_one_geo<linestring, polygon>("road_5_flat", road, strategy, side, circle, join_round, end_flat, 2644.0, 5.0, settings);
     test_one_geo<linestring, polygon>("road_5_25_round", road, strategy, side, circle, join_round, end_round, 2016.0, 5.0, settings, 2.5);

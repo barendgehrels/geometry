@@ -212,7 +212,23 @@ std::string test_difference(std::string const& caseid, G1 const& g1, G2 const& g
     std::ostringstream return_string;
     return_string << bg::wkt(result);
 
-    typename bg::default_area_result<G1>::type const area = bg::area(result);
+    auto const area = bg::area(result);
+
+#if 0
+    // DEBUG
+    for (const auto& pol : result)
+    {
+        for (const auto& ring : bg::interior_rings(pol))
+        {
+            std::cout << " RING  area=" << bg::area(ring) 
+                << " valid=" << bg::is_valid(ring)
+                << std::endl;
+        }
+        std::cout << " area=" << bg::area(pol) 
+            << " valid=" << bg::is_valid(pol)
+            << std::endl;
+    }
+#endif
 
 #if ! defined(BOOST_GEOMETRY_NO_BOOST_TEST)
     if (settings.test_validity_of_diff(dtype))
