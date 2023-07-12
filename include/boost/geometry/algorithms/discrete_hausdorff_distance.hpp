@@ -41,6 +41,11 @@
 #include <boost/geometry/strategies/distance_result.hpp>
 #include <boost/geometry/util/range.hpp>
 
+#include <algorithm>
+#include <iterator>
+#include <utility>
+#include <limits>
+
 // Note that in order for this to work umbrella strategy has to contain
 // index strategies.
 #ifdef BOOST_GEOMETRY_ENABLE_SIMILARITY_RTREE
