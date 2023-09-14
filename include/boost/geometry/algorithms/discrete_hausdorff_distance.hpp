@@ -46,6 +46,8 @@
 #include <utility>
 #include <limits>
 
+#include <boost/range/size.hpp>
+
 // Note that in order for this to work umbrella strategy has to contain
 // index strategies.
 #ifdef BOOST_GEOMETRY_ENABLE_SIMILARITY_RTREE
