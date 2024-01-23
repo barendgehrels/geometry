@@ -125,7 +125,7 @@ struct get_turns
             return ! detail::disjoint::disjoint_box_box(box, section.bounding_box, strategy);
         };
 
-        partition_lambda
+        partition_lambda_one_range
             <
                 box_type
             >(sections, expand_box, overlaps_box, visit_sections);

@@ -494,29 +494,32 @@ public:
                         std::decay_t<decltype(section2)>,
                         TurnPolicy
                     >::apply(source_id1, geometry1, section1,
-                            source_id2, geometry2, section2,
-                            false, false,
-                            strategy,
-                            robust_policy,
-                            turns, interrupt_policy);
+                             source_id2, geometry2, section2,
+                             false, false,
+                             strategy,
+                             robust_policy,
+                             turns, interrupt_policy);
         };
 
-        auto expand_box = [&strategy](auto& box, auto const& section)
-        {
-            geometry::expand(box, section.bounding_box, strategy);
-        };
-        auto overlaps_box = [&strategy](auto const& box, auto const& section)
-        {
-            return ! detail::disjoint::disjoint_box_box(box, section.bounding_box, strategy);
-        };
-
-        partition_lambda
-            <
-                box_type
-            >(sec1, sec2,
-              expand_box, overlaps_box,
-              expand_box, overlaps_box,
-              visit_sections);
+        partition_lambda<box_type>(
+            sec1, sec2,
+            [&strategy](auto& box, auto const& sec)
+            {
+                geometry::expand(box, sec.bounding_box, strategy);
+            },
+            [&strategy](auto const& box, auto const& section)
+            {
+                return !detail::disjoint::disjoint_box_box(box, section.bounding_box, strategy);
+            },
+            [&strategy](auto& b, auto const& s)
+            {
+                geometry::expand(b, s.bounding_box, strategy);
+            },
+            [&strategy](auto const& box, auto const& section)
+            {
+                return !detail::disjoint::disjoint_box_box(box, section.bounding_box, strategy);
+            },
+            visit_sections);
     }
 };
 

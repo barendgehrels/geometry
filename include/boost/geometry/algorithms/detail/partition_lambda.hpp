@@ -100,7 +100,7 @@ template
     typename BoxType,
     typename ForwardRange
 >
-bool partition_lambda(ForwardRange const& forward_range,
+bool partition_lambda_one_range(ForwardRange const& forward_range,
                const std::function
                    <
                        void(BoxType&,

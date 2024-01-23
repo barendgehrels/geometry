@@ -233,9 +233,12 @@ inline void assign_parents(Geometry1 const& geometry1,
             }
         }
 
+        // WORKAROUND for gcc 5-7, not able to recognize static const variables in lambdas.
+        bool const cfo = check_for_orientation;
+        // END WORKAROUND
         auto assign_to_map = [&](auto const& outer, auto const& inner)
         {
-            if (check_for_orientation
+            if (cfo
                 || (math::larger(outer.real_area, 0) && math::smaller(inner.real_area, 0)))
             {
                 auto& inner_in_map = ring_map[inner.id];
@@ -258,7 +261,7 @@ inline void assign_parents(Geometry1 const& geometry1,
             return true;
         };
 
-        partition_lambda
+        partition_lambda_one_range
             <
                 box_type
             >(vector,

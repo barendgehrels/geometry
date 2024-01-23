@@ -486,7 +486,7 @@ struct buffered_piece_collection
 
             detail::sectionalize::enlarge_sections(monotonic_sections, m_strategy);
 
-            partition_lambda<robust_box_type>(monotonic_sections,
+            partition_lambda_one_range<robust_box_type>(monotonic_sections,
                 [&strategy](auto& box, auto const& section)
                 {
                     geometry::expand(box, section.bounding_box, strategy);
